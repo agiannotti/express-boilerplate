@@ -12,4 +12,8 @@ app.use(helmet());
 const morganOption = process.env.NODE_ENV === "production" ? "tiny" : "common";
 app.use(morgan(morganOption));
 
+app.get("/", (req, res) => {
+  res.json({ message: "Hello, world!" });
+});
+
 module.exports = app;
