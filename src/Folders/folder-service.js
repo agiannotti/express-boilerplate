@@ -1,6 +1,6 @@
 const FolderService = {
-  getAllFolders(knex) {
-    return knex.select('*').from('folder');
+  getAllFolders(db) {
+    return db.select('*').from('folder');
   },
   insertFolder(knex, newFolder) {
     return knex
