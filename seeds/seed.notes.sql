@@ -1,5 +1,6 @@
 BEGIN;
 
+
 INSERT INTO note (note_name, content, assigned_folder)
 VALUES
 ('One', 'nintendo switch', 1),

@@ -1,4 +1,4 @@
-const path = require('path');
+// const path = require('path');
 const express = require('express');
 const xss = require('xss');
 const NoteService = require('./note-service');
@@ -14,7 +14,7 @@ const serializeNote = (note) => ({
 });
 
 noteRouter
-  .route('/')
+  .route('/api/note')
   .get((req, res, next) => {
     const knexInstance = req.app.get('db');
     NoteService.getAllNotes(knexInstance)
