@@ -15,7 +15,7 @@ folderRouter
   .get((req, res, next) => {
     console.log('ez gg!');
     const knexInstance = req.app.get('db');
-    FolderService.getAllFolders(knexInstance)
+    FolderService.getAllFolders(req.app.get('db'))
       .then((folders) => {
         console.log('hello, get all folders!');
         res.json(folders.map(serializeFolder));
@@ -44,7 +44,7 @@ folderRouter
   });
 
 folderRouter
-  .route('/:folder_id')
+  .route('/api/folder/:folder_id')
   .all((req, res, next) => {
     FolderService.getById(req.app.get('db'), req.params.folder_id)
       .then((folder) => {
