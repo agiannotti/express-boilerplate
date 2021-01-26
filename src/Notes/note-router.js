@@ -14,7 +14,7 @@ const serializeNote = (note) => ({
 });
 
 noteRouter
-  .route('/api/note')
+  .route('/')
   .get((req, res, next) => {
     const knexInstance = req.app.get('db');
     NoteService.getAllNotes(knexInstance)
@@ -29,7 +29,7 @@ noteRouter
     const newNote = { note_name, content, assigned_folder };
 
     for (const [key, value] of Object.entries(newNote))
-      if (value === null)
+      if (value == null)
         return res.status(400).json({
           error: { message: `Missing '${key}' in request body` },
         });
@@ -51,7 +51,7 @@ noteRouter
   });
 
 noteRouter
-  .route('api/note/:note_id')
+  .route('/:note_id')
   .all((req, res, next) => {
     NoteService.getById(req.app.get('db'), req.params.note_id)
       .then((note) => {

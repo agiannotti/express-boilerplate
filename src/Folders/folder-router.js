@@ -1,23 +1,21 @@
 const path = require('path');
 const express = require('express');
-// const xss = require('xss');
+const xss = require('xss');
 const FolderService = require('./folder-service');
 const folderRouter = express.Router();
 const jsonBodyParser = express.json();
 
 const serializeFolder = (folder) => ({
   id: folder.id,
-  folder_name: folder.folder_name,
+  folder_name: xss(folder.folder_name),
 });
 
 folderRouter
-  .route('/api/folder')
+  .route('/')
   .get((req, res, next) => {
-    console.log('ez gg!');
     const knexInstance = req.app.get('db');
-    FolderService.getAllFolders(req.app.get('db'))
+    FolderService.getAllFolders(knexInstance)
       .then((folders) => {
-        console.log('hello, get all folders!');
         res.json(folders.map(serializeFolder));
       })
       .catch(next);
@@ -27,7 +25,7 @@ folderRouter
     const { folder_name } = req.body;
     const newFolder = { folder_name };
 
-    if (folder_name === null || folder_name.length < 1) {
+    if (folder_name == null || folder_name.length < 1) {
       return res.status(400).json({
         error: { message: `Missing folder name` },
       });
@@ -44,7 +42,7 @@ folderRouter
   });
 
 folderRouter
-  .route('/api/folder/:folder_id')
+  .route('/:folder_id')
   .all((req, res, next) => {
     FolderService.getById(req.app.get('db'), req.params.folder_id)
       .then((folder) => {
