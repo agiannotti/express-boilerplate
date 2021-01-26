@@ -14,7 +14,7 @@ app.use(helmet());
 const morganOption = NODE_ENV === 'production' ? 'tiny' : 'common';
 app.use(morgan(morganOption));
 
-app.use('/api/folder', folderRouter);
+app.use(folderRouter);
 app.use(noteRouter);
 
 app.use(function errorHandler(error, req, res, next) {

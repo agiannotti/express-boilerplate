@@ -1,4 +1,4 @@
-// const path = require('path');
+const path = require('path');
 const express = require('express');
 const xss = require('xss');
 const NoteService = require('./note-service');
@@ -29,7 +29,7 @@ noteRouter
     const newNote = { note_name, content, assigned_folder };
 
     for (const [key, value] of Object.entries(newNote))
-      if (value == null)
+      if (value === null)
         return res.status(400).json({
           error: { message: `Missing '${key}' in request body` },
         });
